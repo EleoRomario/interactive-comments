@@ -98,3 +98,14 @@
 .button__send:hover{
   background-color: var(--blue-light);
 }
+/* ------------Replies------------ */
+.replies__container{
+  display: grid;
+  grid-template-columns: 1fr 6fr;
+}
+.replies__line{
+  width: 3px;
+  background-color: var(--blue-light);
+  margin-left: 5rem;
+  height: 110%;
+}
