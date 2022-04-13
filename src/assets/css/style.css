@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap');
+@import '_comment';
+:root{
+  /* Colors */
+  --primary: hsl(238, 40%, 52%);
+  --delete: hsl(358, 79%, 66%);
+  --blue-light: hsl(237, 57%, 85%);
+  --red: hsl(357, 100%, 86%);
+  --bg: hsl(228,1%,98%);
+  --btns: hsl(228, 33%, 97%); 
+  --btns-alt: hsl(240, 3%, 94%);
+  --text: hsl(210, 18%, 20%);
+  --text-alt: hsl(230, 2%, 51%);
+
+  /* font Weights */
+  --font-w-3: 300;
+  --font-w-4: 400;
+  --font-w-5: 500;
+  --font-w-7: 700;
+  
+  /* font size */
+  --font-title: 2rem;
+  --font-text: 1rem;
+}
+*{
+  padding: 0;
+  margin: 0;
+  font-family: 'Rubik',
+  sans-serif;;
+}
+body{
+  background-color: var(--bg);
+}
