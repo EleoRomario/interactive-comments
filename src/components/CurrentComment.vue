@@ -3,12 +3,12 @@
     <div class="current__container">
       <div class="current__user">
         <img
-          src="../assets/images/avatars/image-juliusomo.png"
+          :src="require(`@/assets/${currentUser.image.png}`)"
           class="comment__user-avatar"
         />
       </div>
       <div class="comment__textarea">
-        <textarea v-model="comment.content" id="" rows="3" class="comment__text"></textarea>
+        <textarea v-model="comment.content" id="" rows="3" class="comment__textarea-text"></textarea>
       </div>
       <div class="current__send">
         <button class="button__send">SEND</button>
@@ -20,6 +20,9 @@
 <script>
 export default {
   name: "CurrentComment",
+  props: {
+    currentUser: Object,
+  },
   data(){
     return {   
       process: false,
@@ -30,10 +33,10 @@ export default {
         createdAt: 'Now',
         score: 0,
         user: {
-          username: 'eleoromario',
+          username: this.currentUser.username,
           image: {
-            png: 'images/avatars/image-juliusomo.png',
-            webp: 'images/avatars/image-juliusomo.webp',
+            png: this.currentUser.image.png,
+            webp: this.currentUser.image.png,
           },
         },
         replies: [],

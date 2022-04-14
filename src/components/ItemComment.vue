@@ -39,7 +39,10 @@
           <span class="comment__user-date">{{ comment.createdAt }}</span>
         </div>
         <div class="comment__options">
-          <div class="comment__delete btn">
+          <button
+            class="comment__delete btn"
+            v-if="currentUser.username == comment.user.username"
+          >
             <svg
               width="12"
               height="14"
@@ -53,8 +56,12 @@
               />
             </svg>
             Delete
-          </div>
-          <div class="comment__edit btn">
+          </button>
+          <button
+            @click="editComment(comment)"
+            class="comment__edit btn"
+            v-if="currentUser.username == comment.user.username"
+          >
             <svg
               width="14"
               height="14"
@@ -68,8 +75,8 @@
               />
             </svg>
             Edit
-          </div>
-          <div class="comment__reply btn">
+          </button>
+          <button class="comment__reply btn">
             <svg
               width="14"
               height="13"
@@ -83,13 +90,17 @@
               />
             </svg>
             Reply
-          </div>
+          </button>
         </div>
       </div>
       <div class="comment__data">
-        <p class="comment__text">
-          {{ comment.content }}
-        </p>
+        <textarea
+          class="comment__text-edit"
+          v-model="commentEdit.content"
+          v-if="editing == comment.id"
+        />
+        <span v-else class="comment__text">{{ comment.content }}</span>
+        <button class="button__send" v-if="editing == comment.id" @click="saveComment">UPDATE</button>
       </div>
     </div>
   </div>
@@ -141,7 +152,10 @@
             <span class="comment__user-date">{{ replie.createdAt }}</span>
           </div>
           <div class="comment__options">
-            <div class="comment__delete btn">
+            <button
+              class="comment__delete btn"
+              v-if="currentUser.username == replie.user.username"
+            >
               <svg
                 width="12"
                 height="14"
@@ -155,8 +169,11 @@
                 />
               </svg>
               Delete
-            </div>
-            <div class="comment__edit btn">
+            </button>
+            <button
+              class="comment__edit btn"
+              v-if="currentUser.username == replie.user.username"
+            >
               <svg
                 width="14"
                 height="14"
@@ -170,8 +187,8 @@
                 />
               </svg>
               Edit
-            </div>
-            <div class="comment__reply btn">
+            </button>
+            <button class="comment__reply btn">
               <svg
                 width="14"
                 height="13"
@@ -185,13 +202,11 @@
                 />
               </svg>
               Reply
-            </div>
+            </button>
           </div>
         </div>
         <div class="comment__data">
-          <p class="comment__text">
-            {{ replie.content }}
-          </p>
+          <span class="comment__text">{{ replie.content }}</span>
         </div>
       </div>
     </div>
@@ -203,6 +218,27 @@ export default {
   name: "ItemComment",
   props: {
     comment: Object,
+    currentUser: Object,
+  },
+  data() {
+    return {
+      editing: null,
+      commentEdit: this.comment,
+    };
+  },
+  methods: {
+    editComment(comment) {
+      this.commentText = Object.assign({}, comment);
+      console.log(this.commentText);
+      this.editing = comment.id;
+    },
+    saveComment(comment) {
+      if(!this.comment.content.length) {
+          return;
+      }
+      this.$emit("update-comment",comment.id, comment);
+      this.editing = null;
+    },
   },
 };
 </script>

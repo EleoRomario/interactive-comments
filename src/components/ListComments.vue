@@ -1,5 +1,5 @@
 <template>  
-    <ItemComment v-for="item in comments" :key="item.id" :comment="item" />
+    <ItemComment v-for="item in comments" :key="item.id" :comment="item" :currentUser="currentUser" />
 </template>
 
 <script>
@@ -11,6 +11,7 @@ export default {
   },
   props: {
     comments: Array,
+    currentUser: Object,
   },
   
 };
@@ -20,10 +21,11 @@ export default {
 .comments__list {
   display: grid;
   grid-template-columns: 1fr;
-  grid-auto-rows: 1fr;
   grid-row-gap: 1rem;
   width: 50rem;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="comments__list">
-    <ListComments :comments="comments" :currentUser="currentUser" />
-    <CurrentComment @add-comment="addComment" />
+    <ListComments :comments="comments" :currentUser="currentUser" @update-comment="updateComment"/>
+    <CurrentComment @add-comment="addComment"  :currentUser="currentUser"/>
   </div>
 </template>
 
@@ -80,6 +80,13 @@ export default {
           ],
         },
       ],
+      currentUser: {
+        image: {
+          png: "images/avatars/image-juliusomo.png",
+          webp: "images/avatars/image-juliusomo.webp",
+        },
+        username: "juliusomo",
+      },
     };
   },
   methods: {
@@ -90,19 +97,16 @@ export default {
       }
       this.comments = [...this.comments, {id,...comment}];
     },
+    updateComment(id, commentUpdate){
+      alert(id, commentUpdate);
+      this.comments = this.comments.map(comment => {
+        comment.id === id ? comment = commentUpdate : comment;
+      });
+    }
   },
 };
 </script>
 
 <style>
 @import "./assets/css/style.css";
-.comments__list {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-auto-rows: 1fr;
-  grid-row-gap: 1rem;
-  width: 50rem;
-  margin-left: auto;
-  margin-right: auto;
-}
 </style>

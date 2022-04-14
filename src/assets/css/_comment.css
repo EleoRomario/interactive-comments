@@ -32,6 +32,7 @@
 .comment__content{
   margin-left: 1rem;
   width: 100%;
+  height: fit-content;
 }
 .comment__header{
   display: grid;
@@ -64,6 +65,8 @@
   align-items: center;
   margin: 0 0.5rem;
   font-weight: var(--font-w-5);
+  border: none;
+  background-color: transparent;
 }
 .btn__icon{
   margin-right: 0.5rem;
@@ -92,11 +95,23 @@
 .comment__delete:hover .delete__icon{
   fill: var(--delete-alt);
 }
-.comment__text{
+.comment__text, .comment__text-edit{
+  display: block;
   color: var(--text-alt);
   font-weight: var(--font-w-3);
   font-size: var(--font-text);
-  max-height: 5rem;
+  width: 100%;
+  padding: 0.5rem;
+  border: none;
+}
+.comment__text-edit{
+  border: 1px solid var(--blue-light);
+  margin: 0.5rem 0;
+  border-radius: 0.5rem;
+}
+.comment__text-edit:focus{
+  outline: none;
+  border-color: var(--primary);
 }
 
 /*-------Current User-------------*/
@@ -104,7 +119,7 @@
   width:100%;
   margin: 0 2rem 0 0;
 }
-.comment__text{
+.comment__textarea-text{
   width: 100%;
   height: 100%;
   border-radius: 1rem;
@@ -112,7 +127,7 @@
   padding: 0.5rem;
   resize: none;
 }
-.comment__text:focus{
+.comment__textarea-text:focus{
   outline: none !important;
   border-color: var(--primary);
 }
