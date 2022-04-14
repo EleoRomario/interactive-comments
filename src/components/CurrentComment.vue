@@ -21,7 +21,10 @@
 export default {
   name: "CurrentComment",
   data(){
-    return {      
+    return {   
+      process: false,
+      correct: false,
+      error: false,   
       comment: {
         content: '',
         createdAt: 'Now',
@@ -39,7 +42,32 @@ export default {
   },
   methods: {
     sendComment(){
+      this.process = true;
+      this.resetState();
+
+      // Textarea is empty
+      if(this.commentEmpty){
+        this.error = true;
+        return;
+      }
       this.$emit('add-comment', this.comment);
+      this.error = false;
+      this.correct = true;
+      this.process = false;
+      
+      // reset comment
+      this.comment = {
+        content: '',
+      }
+    },
+    resetState(){
+      this.correct = false;
+      this.error = false;
+    }
+  },
+  computed: {
+    commentEmpty(){
+      return this.comment.content.length < 1;
     }
   }
 };

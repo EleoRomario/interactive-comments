@@ -84,7 +84,11 @@ export default {
   },
   methods: {
     addComment(comment) {
-      this.comments = [...this.comments, comment];
+      let id = 0;
+      if (this.comments.length > 0) {
+        id = this.comments[this.comments.length - 1].id + 1;
+      }
+      this.comments = [...this.comments, {id,...comment}];
     },
   },
 };

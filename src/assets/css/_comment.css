@@ -55,16 +55,42 @@
 .comment__user-date{
   color: var(--text-alt);
 }
-.comment__reply{
-  color: var(--primary);
+.comment__options{
+  display: flex;
+}
+.btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0.5rem;
   font-weight: var(--font-w-5);
 }
-.comment__reply:hover{
+.btn__icon{
+  margin-right: 0.5rem;
+}
+.btn:hover{
   cursor: pointer;
+}
+.comment__delete{
+  color: var(--delete);
+}
+.comment__edit{
+  color: var(--primary);
+}
+.comment__reply{
+  color: var(--primary);
+}
+.comment__reply:hover,.comment__edit:hover{
   color: var(--blue-light);
 }
-.comment__reply:hover .reply__icon{
+.comment__reply:hover .reply__icon, .comment__edit:hover .edit__icon{
   fill: var(--blue-light);
+}
+.comment__delete:hover{
+  color: var(--delete-alt);
+}
+.comment__delete:hover .delete__icon{
+  fill: var(--delete-alt);
 }
 .comment__text{
   color: var(--text-alt);
