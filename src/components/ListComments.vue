@@ -1,28 +1,23 @@
-<template>
-  <div class="comments__list">
+<template>  
     <ItemComment v-for="item in comments" :key="item.id" :comment="item" />
-    <CurrentComment :user="currentUser"/>
-  </div>
 </template>
 
 <script>
-import ItemComment from '@/components/ItemComment.vue';
-import CurrentComment from '@/components/CurrentComment.vue';
+import ItemComment from "@/components/ItemComment.vue";
 export default {
-  name: 'ListComments',
+  name: "ListComments",
   components: {
     ItemComment,
-    CurrentComment,
   },
   props: {
     comments: Array,
-    currentUser: Object
-  }
-}
+  },
+  
+};
 </script>
 
 <style>
-.comments__list{  
+.comments__list {
   display: grid;
   grid-template-columns: 1fr;
   grid-auto-rows: 1fr;

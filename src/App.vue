@@ -1,20 +1,22 @@
 <template>
-  <ListComments :comments="comments" :currentUser="currentUser" />
+  <div class="comments__list">
+    <ListComments :comments="comments" :currentUser="currentUser" />
+    <CurrentComment @add-comment="addComment" />
+  </div>
 </template>
 
 <script>
 import ListComments from "@/components/ListComments.vue";
-import data from "@/assets/data/data.json";
+import CurrentComment from "@/components/CurrentComment.vue";
 
 export default {
   name: "App",
   components: {
     ListComments,
+    CurrentComment,
   },
   data() {
-    console.log(data.comments);
     return {
-      currentUser: data.currentUser,
       comments: [
         {
           id: 1,
@@ -80,10 +82,23 @@ export default {
       ],
     };
   },
-  computed: {},
+  methods: {
+    addComment(comment) {
+      this.comments = [...this.comments, comment];
+    },
+  },
 };
 </script>
 
 <style>
 @import "./assets/css/style.css";
+.comments__list {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: 1fr;
+  grid-row-gap: 1rem;
+  width: 50rem;
+  margin-left: auto;
+  margin-right: auto;
+}
 </style>

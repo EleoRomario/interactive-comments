@@ -62,7 +62,9 @@
     v-for="replie in comment.replies"
     :key="replie.id"
   >
-    <div class="replies__line"></div>
+    <div class="replies__lines">
+      <div class="replie__line"></div>
+    </div>
     <div class="comment__container">
       <div class="comment__btns">
       <div class="comment__add button">

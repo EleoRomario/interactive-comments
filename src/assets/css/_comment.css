@@ -31,6 +31,7 @@
 }
 .comment__content{
   margin-left: 1rem;
+  width: 100%;
 }
 .comment__header{
   display: grid;
@@ -69,6 +70,7 @@
   color: var(--text-alt);
   font-weight: var(--font-w-3);
   font-size: var(--font-text);
+  max-height: 5rem;
 }
 
 /*-------Current User-------------*/
@@ -94,6 +96,7 @@
   border-radius: 0.5rem;
   color: #fff;
   cursor: pointer;
+  border: none;
 }
 .button__send:hover{
   background-color: var(--blue-light);
@@ -103,9 +106,14 @@
   display: grid;
   grid-template-columns: 1fr 6fr;
 }
-.replies__line{
+.replies__lines{
+  position: relative;
+}
+.replie__line{
+  position: relative;
   width: 3px;
   background-color: var(--blue-light);
   margin-left: 5rem;
   height: 110%;
+  top: -1rem;
 }
