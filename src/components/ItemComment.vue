@@ -42,6 +42,7 @@
           <button
             class="comment__delete btn"
             v-if="currentUser.username == comment.user.username"
+            @click="deleteComment(comment)"
           >
             <svg
               width="12"
@@ -239,6 +240,9 @@ export default {
       this.$emit("update-comment",comment.id, comment);
       this.editing = null;
     },
+    deleteComment(comment) {
+      this.$emit("delete-comment", comment.id);
+    }
   },
 };
 </script>

@@ -61,6 +61,16 @@ export default {
       // reset comment
       this.comment = {
         content: '',
+        createdAt: 'Now',
+        score: 0,
+        user: {
+          username: this.currentUser.username,
+          image: {
+            png: this.currentUser.image.png,
+            webp: this.currentUser.image.png,
+          },
+        },
+        replies: [],
       }
     },
     resetState(){

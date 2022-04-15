@@ -1,7 +1,12 @@
 <template>
   <div class="comments__list">
-    <ListComments :comments="comments" :currentUser="currentUser" @update-comment="updateComment"/>
-    <CurrentComment @add-comment="addComment"  :currentUser="currentUser"/>
+    <ListComments
+      :comments="comments"
+      :currentUser="currentUser"
+      @delete-comment="deleteComment"
+      @update-comment="updateComment"
+    />
+    <CurrentComment @add-comment="addComment" :currentUser="currentUser" />
   </div>
 </template>
 
@@ -95,14 +100,17 @@ export default {
       if (this.comments.length > 0) {
         id = this.comments[this.comments.length - 1].id + 1;
       }
-      this.comments = [...this.comments, {id,...comment}];
+      this.comments = [...this.comments, { id, ...comment }];
     },
-    updateComment(id, commentUpdate){
-      alert(id, commentUpdate);
-      this.comments = this.comments.map(comment => {
-        comment.id === id ? comment = commentUpdate : comment;
+    updateComment(id, commentUpdate) {
+      this.comments = this.comments.map((comment) => {
+        comment.id === id ? (comment = commentUpdate) : comment;
       });
-    }
+    },
+    deleteComment(id) {
+      const filterComments = this.comments.filter((comment) => comment.id !== id);
+      this.comments = filterComments;
+    },
   },
 };
 </script>
