@@ -1,5 +1,5 @@
 <template>  
-    <ItemComment v-for="item in comments" :key="item.id" :comment="item" :currentUser="currentUser" />
+    <ItemComment v-for="item in comments" :key="item.id" :comment="item" :currentUser="currentUser" @delete-comment="deleteComment"/>
 </template>
 
 <script>
@@ -13,7 +13,12 @@ export default {
     comments: Array,
     currentUser: Object,
   },
-  
+  emits: ["delete-comment", "update-comment"],
+  methods: {
+    deleteComment(id) {
+      this.$emit("delete-comment", id);
+    },
+  },
 };
 </script>
 

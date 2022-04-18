@@ -42,7 +42,7 @@
           <button
             class="comment__delete btn"
             v-if="currentUser.username == comment.user.username"
-            @click="deleteComment(comment)"
+            @click="this.$emit('delete-comment', comment.id)"
           >
             <svg
               width="12"
@@ -101,7 +101,13 @@
           v-if="editing == comment.id"
         />
         <span v-else class="comment__text">{{ comment.content }}</span>
-        <button class="button__send" v-if="editing == comment.id" @click="saveComment">UPDATE</button>
+        <button
+          class="button__send"
+          v-if="editing == comment.id"
+          @click="saveComment"
+        >
+          UPDATE
+        </button>
       </div>
     </div>
   </div>
@@ -156,6 +162,7 @@
             <button
               class="comment__delete btn"
               v-if="currentUser.username == replie.user.username"
+              @click="deleteReplie(comment, replie.id)"
             >
               <svg
                 width="12"
@@ -172,6 +179,7 @@
               Delete
             </button>
             <button
+              @click="editComment(replie)"
               class="comment__edit btn"
               v-if="currentUser.username == replie.user.username"
             >
@@ -207,7 +215,19 @@
           </div>
         </div>
         <div class="comment__data">
-          <span class="comment__text">{{ replie.content }}</span>
+          <textarea
+            class="comment__text-edit"
+            v-model="replie.content"
+            v-if="editing == replie.id"
+          />
+          <span v-else class="comment__text">{{ replie.content }}</span>
+          <button
+            class="button__send"
+            v-if="editing == replie.id"
+            @click="saveComment"
+          >
+            UPDATE
+          </button>
         </div>
       </div>
     </div>
@@ -227,22 +247,22 @@ export default {
       commentEdit: this.comment,
     };
   },
+  emits: ["delete-comment", "update-comment"],
   methods: {
     editComment(comment) {
       this.commentText = Object.assign({}, comment);
-      console.log(this.commentText);
       this.editing = comment.id;
     },
     saveComment(comment) {
-      if(!this.comment.content.length) {
-          return;
+      if (!this.comment.content.length) {
+        return;
       }
-      this.$emit("update-comment",comment.id, comment);
+      this.$emit("update-comment", comment.id, comment);
       this.editing = null;
     },
-    deleteComment(comment) {
-      this.$emit("delete-comment", comment.id);
-    }
+    deleteReplie(comment, replieId) {
+      this.commentEdit.replies = this.commentEdit.replies.filter((replie) => replie.id !== replieId);
+    },
   },
 };
 </script>

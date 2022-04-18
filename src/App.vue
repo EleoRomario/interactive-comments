@@ -3,8 +3,8 @@
     <ListComments
       :comments="comments"
       :currentUser="currentUser"
-      @delete-comment="deleteComment"
       @update-comment="updateComment"
+      @delete-comment="deleteComment"
     />
     <CurrentComment @add-comment="addComment" :currentUser="currentUser" />
   </div>
@@ -108,8 +108,7 @@ export default {
       });
     },
     deleteComment(id) {
-      const filterComments = this.comments.filter((comment) => comment.id !== id);
-      this.comments = filterComments;
+      this.comments = this.comments.filter((comment) => comment.id !== id);
     },
   },
 };
