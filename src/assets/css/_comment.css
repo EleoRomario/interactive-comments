@@ -155,6 +155,10 @@
   width: 3px;
   background-color: var(--blue-light);
   margin-left: 5rem;
-  height: 110%;
+  height: 100%;
   top: -1rem;
+}
+.replies__list{
+  display: grid;
+  gap: 1rem;
 }

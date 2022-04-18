@@ -10,7 +10,7 @@
           />
         </svg>
       </div>
-      <div class="comment__count">{{ comment.score }}</div>
+      <div class="comment__count">{{ replie.score }}</div>
       <div class="comment__reduce button">
         <svg width="11" height="3" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -27,22 +27,22 @@
           <picture>
             <source
               type="image/webp"
-              :src="require(`@/assets/${comment.user.image.webp}`)"
+              :src="require(`@/assets/${replie.user.image.webp}`)"
               class="comment__user-avatar"
             />
             <img
-              :src="require(`@/assets/${comment.user.image.png}`)"
+              :src="require(`@/assets/${replie.user.image.png}`)"
               class="comment__user-avatar"
             />
           </picture>
-          <h4 class="comment__user-name">{{ comment.user.username }}</h4>
-          <span class="comment__user-date">{{ comment.createdAt }}</span>
+          <h4 class="comment__user-name">{{ replie.user.username }}</h4>
+          <span class="comment__user-date">{{ replie.createdAt }}</span>
         </div>
         <div class="comment__options">
           <button
             class="comment__delete btn"
-            v-if="currentUser.username == comment.user.username"
-            @click="this.$emit('delete-comment', comment.id)"
+            v-if="replie.user.username === currentUser.username"
+            @click="this.$emit('delete-reply', replie.id)"
           >
             <svg
               width="12"
@@ -59,9 +59,9 @@
             Delete
           </button>
           <button
-            @click="editComment(comment)"
+            @click="editReply(replie)"
             class="comment__edit btn"
-            v-if="currentUser.username == comment.user.username"
+            v-if="replie.user.username === currentUser.username"
           >
             <svg
               width="14"
@@ -77,7 +77,11 @@
             </svg>
             Edit
           </button>
-          <button class="comment__reply btn" @click="addReply">
+          <button
+            class="comment__reply btn"
+            v-if="idEditing !== replie.id"
+            @click="addReplyR"
+          >
             <svg
               width="14"
               height="13"
@@ -97,57 +101,41 @@
       <div class="comment__data">
         <textarea
           class="comment__text-edit"
-          v-model="commentEdit.content"
-          v-if="editing == comment.id"
+          v-if="idEditing === replie.id"
+          v-model="newReply.content"
+          ref="textarea"
         />
-        <span v-else class="comment__text">{{ comment.content }}</span>
+        <span v-else class="comment__text">{{ replie.content }}</span>
         <button
           class="button__send"
-          v-if="editing == comment.id"
-          @click="saveComment"
+          @click="updateReply(replie)"
+          v-if="idEditing === replie.id"
         >
-          UPDATE
+          REPLY
         </button>
       </div>
-    </div>
-  </div>
-  <div class="replies__container">
-    <div class="replies__lines">
-      <div class="replie__line"></div>
-    </div>
-    <div class="replies__list">
-      <ItemReplie
-        v-for="replie in comment.replies"
-        :key="replie.id"
-        :replie="replie"
-        :comment="comment"
-        :currentUser="currentUser"
-        :editing="editing"
-        @delete-reply = "deleteReply"
-        @add-replyR = "addReply"
-      />
     </div>
   </div>
 </template>
 
 <script>
-import ItemReplie from "./ItemReplie.vue";
 export default {
-  name: "ItemComment",
-  components: {
-    ItemReplie,
-  },
+  name: "ItemReplie",
   props: {
-    comment: Object,
+    comment: Array,
+    replie: Object,
     currentUser: Object,
+    editing: Number,
   },
   data() {
     return {
-      editing: null,
-      commentEdit: this.comment,
       commentReplie: this.comment,
+      idEditing: this.editing,
+      replies: this.comment.replies,
+      newReply: this.replie,
+      userReplie: this.comment.user.username,
       reply: {
-        content:"",
+        content: "",
         createdAt: "Now",
         score: 0,
         replyingTo: this.comment.user.username,
@@ -161,33 +149,24 @@ export default {
       },
     };
   },
-  emits: ["delete-comment", "update-comment"],
   methods: {
-    editComment(comment) {
-      this.commentText = Object.assign({}, comment);
-      this.editing = comment.id;
-    },
-    saveComment(comment) {
-      if (!this.comment.content.length) {
+    updateReply(replie) {
+      if (replie.content == "") {
         return;
       }
-      this.$emit("update-comment", comment.id, comment);
-      this.editing = null;
+      this.newReply = replie;
+      this.idEditing = null;
     },
-    addReply() {
-      let id = 0;
-      if (this.comment.replies.length > 0) {
-        id = this.comment.replies[this.comment.replies.length - 1].id + 1;
-      }
-      this.commentReplie.replies = [
-        ...this.commentReplie.replies,
-        { id, ...this.reply },
-      ];
-      this.editing = id;
+    editReply(replie) {
+      this.idEditing = replie.id;
+      this.newReply = replie;
     },
-    deleteReply(id){
-      this.commentReplie.replies = this.comment.replies.filter((reply) => reply.id !== id);
-    }
+    addReplyR() {
+      this.$emit("add-replyR", this.reply);
+    },
+  },
+  mounted() {
+    this.$nextTick(() => this.$refs.textarea.focus());
   },
 };
 </script>
